@@ -11,29 +11,27 @@ if (isset($_POST['submit'])) {
     $sites = $_POST['sites'];
 
 
-$sql = "SELECT ville.idville , ville.nomville, pays.nompays FROM ville
-        INNER JOIN pays ON ville.idpays = pays.idpays";
+    $sql = "SELECT ville.idville, ville.nomville, pays.nompays FROM ville
+    INNER JOIN pays ON ville.idpays = pays.idpays";
 
+if (!empty($continent)) {
+$sql .= " INNER JOIN continent ON pays.idcon = continent.idcon
+          AND continent.nomcon LIKE '%$continent%'";
+}
 
+if (!empty($pays)) {
+$sql .= " AND pays.nompays LIKE '%$pays%'";
+}
 
-    if (!empty($continent)) {
-        $sql .= " INNER JOIN continent ON pays.idcon = continent.idcon
-                  WHERE continent.nomcon LIKE '%$continent%'";
-    }
+if (!empty($ville)) {
+$sql .= " AND ville.nomville LIKE '%$ville%'";
+}
 
-    if (!empty($pays)) {
-        $sql .= " AND pays.nompays LIKE '%$pays%'";
-    }
+if (!empty($sites)) {
+$sql .= " INNER JOIN sites ON ville.idville = sites.idville 
+          AND sites.nomsite LIKE '%$sites%'";
+}
 
-
-     if (!empty($ville)) {
-        $sql .= " AND ville.nomville LIKE '%$ville%'";
-    }
-
-    if (!empty($sites)) {
-       $sql .= " INNER JOIN sites ON ville.idville  = sites.idville 
-              WHERE sites.nomsite LIKE '%$sites%'";
-    }
 
   
     $result = mysqli_query($conn, $sql);
