@@ -32,7 +32,7 @@ $sql = "SELECT ville.idville , ville.nomville, pays.nompays FROM ville
 
     if (!empty($sites)) {
        $sql .= " INNER JOIN sites ON ville.idville  = sites.idville 
-              WHERE sites.nomsit LIKE '%$sites%'";
+              WHERE sites.nomsite LIKE '%$sites%'";
     }
 
   
