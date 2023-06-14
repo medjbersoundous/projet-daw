@@ -124,10 +124,10 @@ if (isset($_POST['submit'])) {
         
         $villeId =mysqli_insert_id($conn); 
 
-        //Insertion dans la table contients
-        $sql3 = "INSERT INTO contient (nomcon) VALUES ('$nomcon')";
-        mysqli_query($conn, $sql3);
-        $contientId = mysqli_insert_id($conn); 
+        //Insertion dans la table continents
+       // $sql3 = "INSERT INTO continent (nomcon) VALUES ('$nomcon')";
+         //mysqli_query($conn, $sql3);
+         //$continentId = mysqli_insert_id($conn); 
         
         // Insertion dans la table "necessaire"
         $sql4 = "INSERT INTO necessaire (idville, typenec, nomnec) VALUES ( '$villeId','hotel', '$nomnech');";
@@ -143,7 +143,7 @@ if (isset($_POST['submit'])) {
         $conn->query($sql8);
        
 
-        header('Location: index.php');
+        header('Location: indeex.php');
     }
     
     
@@ -194,6 +194,7 @@ if (isset($_POST['submit'])) {
         <label>hotel :</label>
         <input type="text" name="nomnech" value="<?php echo htmlspecialchars($nomnech) ?>">
         <div class="red-text"><?php echo $errors['nomnech'] ?></div>
+
         <!-- <div>
                     <label>Hôtels :</label>
                     <input type="text" id="nomnech" name="nomnech" placeholder="Nom de l'hôtel"

@@ -8,7 +8,7 @@ if (isset($_POST['submit'])) {
     $continent = $_POST['continent'];
     $pays = $_POST['pays'];
     $ville = $_POST['ville'];
-    $site = $_POST['site'];
+    $sites = $_POST['sites'];
 
 
 $sql = "SELECT ville.idville , ville.nomville, pays.nompays FROM ville
@@ -30,9 +30,9 @@ $sql = "SELECT ville.idville , ville.nomville, pays.nompays FROM ville
         $sql .= " AND ville.nomville LIKE '%$ville%'";
     }
 
-    if (!empty($site)) {
-       $sql .= " INNER JOIN site ON ville.idville  = site.idville 
-              WHERE site.nomsit LIKE '%$site%'";
+    if (!empty($sites)) {
+       $sql .= " INNER JOIN sites ON ville.idville  = sites.idville 
+              WHERE sites.nomsit LIKE '%$sites%'";
     }
 
   
@@ -60,6 +60,7 @@ $sql = "SELECT ville.idville , ville.nomville, pays.nompays FROM ville
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>projet daw</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
    <link rel="stylesheet" href="style.css">
 </head>
 
@@ -136,7 +137,7 @@ $sql = "SELECT ville.idville , ville.nomville, pays.nompays FROM ville
             discover your favourite place with us 
         </h3> -->
         
-<form action="index.php" method="POST">
+<form action="indeex.php" method="POST">
     <div class="input">
         <span>Continent:</span>
         <input type="text" name="continent">
@@ -151,12 +152,13 @@ $sql = "SELECT ville.idville , ville.nomville, pays.nompays FROM ville
     </div>
     <div class="input">
         <span>Site:</span>
-        <input type="text" name="site">
+        <input type="text" name="sites">
     </div>
-</form>
-<div class="b tn">
+    <div class="btn">
     <button class="btn-submit" type="submit" name="submit">Valider</button>
 </div>
+</form>
+
 
 
        
