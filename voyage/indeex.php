@@ -3,6 +3,23 @@ include('config/connect.php');
 
 
 $villes = [];
+if (isset($_GET['delete'])) {
+    $villeId = $_GET['delete'];
+
+    // Supprimer les sites associés à la ville
+    $sqlDeleteSites = "DELETE FROM sites WHERE idville = $villeId";
+    mysqli_query($conn, $sqlDeleteSites);
+    $sqlDeletenec = "DELETE FROM necessaire WHERE idville = $villeId";
+    mysqli_query($conn, $sqlDeletenec);
+
+    // Supprimer la ville
+    $sqlDeleteVille = "DELETE FROM ville WHERE idville = $villeId";
+    mysqli_query($conn, $sqlDeleteVille);
+
+    // Rediriger vers la même page après la suppression
+    header("Location: indeex.php");
+    exit();
+}
 if (isset($_POST['submit'])) {
 
     $continent = $_POST['continent'];
@@ -169,7 +186,7 @@ if ($villes) {
     foreach ($villes as $ville) {
         echo '<li>' . '<a href="ville.php?id=' . $ville['idville'] . '">' . $ville['nomville'] . '</a>' .
             '<a href="modifier.php?id=' . $ville['idville'] . '"><i class="fa-solid fa-pen-to-square"></i></a>' .
-            '<span class="icon"><i class="fa-solid fa-trash"></i></span>' .
+            '<span class="icon"><a href="indeex.php?delete=' . $ville['idville'] . '"><i class="fa-solid fa-trash"></i></a></span>' .
             '</li>';
     }
 } else {
