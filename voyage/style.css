@@ -3,9 +3,10 @@
     padding: 0%;
 }
 body{
-    background-image: url("travels.jpg");
+    background-image: url("agency.jpeg");
     background-repeat: no-repeat;
     background-size: cover;
+    /* background-color: aliceblue; */
 }
 
 .contente{
@@ -18,7 +19,12 @@ body{
     margin-top: 10px;
     color: black;
 }
-
+li span{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-style: italic;
+    font-size: larger;
+    color: white;
+}
 nav{
     width: 20%;
     padding: 10px;
@@ -152,6 +158,60 @@ img {
 .travel img{
     width: 90px;
 }
+div.resultat ul li a {
+    color: white;
+    text-decoration: none;
+}
+div.resultat ul li{
+    background-color: rgba(250, 235, 215, 0.53);
+    border-radius: 10px;
+    margin: 10px;
+
+}
+div.resultat ul{
+   display: flex ;
+   flex-direction: row;
+}
+/*pagination*/
+.resultat {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .liste-pagination {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    white-space: nowrap;
+    transition: transform 0.3s ease;
+  }
+  
+  .liste-pagination li {
+    display: inline-block;
+    margin-right: 10px;
+  }
+  
+  .pagination {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .pagination a {
+    display: inline-block;
+    padding: 5px 10px;
+    margin: 0 2px;
+    text-decoration: none;
+    color: #000;
+    background-color: #e0e0e0;
+    border-radius: 3px;
+  }
+  
+  .pagination a:hover {
+    background-color: #ccc;
+  }
+  
 /* Slideshow container */
 .slideshow-container {
   max-width: 1000px;
@@ -185,4 +245,3 @@ img {
     from {opacity: .4} 
     to {opacity: 1}
   }
-  

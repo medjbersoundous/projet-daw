@@ -180,48 +180,59 @@ $sql .= " INNER JOIN sites ON ville.idville = sites.idville
         <hr>
         <h2 class="titre-recherche">All what you need to know about your destination :</h2>
         <div class="resultat">
-            <ul>
+            <ul class="liste-pagination">
             <?php
-if ($villes) {
-    foreach ($villes as $ville) {
-        echo '<li>' . '<a href="ville.php?id=' . $ville['idville'] . '">' . $ville['nomville'] . '</a>' .
-            '<a href="modifier.php?id=' . $ville['idville'] . '"><i class="fa-solid fa-pen-to-square"></i></a>' .
-            '<span class="icon"><a href="indeex.php?delete=' . $ville['idville'] . '"><i class="fa-solid fa-trash"></i></a></span>' .
-            '</li>';
-    }
-} else {
-    echo '<li>Aucun résultat trouvé.</li>';
-}
+          if ($villes) {
+            foreach ($villes as $ville) {
+              echo '<li class="pagination-item">' . '<a href="ville.php?id=' . $ville['idville'] . '">' . $ville['nomville'] . '</a>' .
+                '<a href="modifier.php?id=' . $ville['idville'] . '"><i class="fa-solid fa-pen-to-square"></i></a>' .
+                '<span class="icon"><a href="indeex.php?delete=' . $ville['idville'] . '"><i class="fa-solid fa-trash"></i></a></span>' .
+                '</li>';
+            }
+          } else {
+       echo '<li>Aucun résultat trouvé.</li>';
+      }
 ?>
-
-
-              
             </ul>
+            <div class="pagination">
+    <button class="prev" hidden >Previous</button>
+    <button class="next" hidden>Next</button>
+  </div>
 
         </div>
+
+
     </section>
    </div>
   </div>
-  <script>
-let slideIndex = 0;
-showSlides();
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.3/min/tiny-slider.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+      var slider = tns({
+        container: '.liste-pagination',
+        items: 4,
+        slideBy: 'page',
+        controls: {
+          prevButton: '.prev',
+          nextButton: '.next',
+        },
+      });
+      var prevButton = document.querySelector('.prev');
+      var nextButton = document.querySelector('.next');
 
-function showSlides() {
-  let i;
-  let slides = document.getElementsByClassName("mySlides");
-  let dots = document.getElementsByClassName("dot");
-  for (i = 0; i < slides.length; i++) {
-    slides[i].style.display = "none";  
-  }
-  slideIndex++;
-  if (slideIndex > slides.length) {slideIndex = 1}    
-  for (i = 0; i < dots.length; i++) {
-    dots[i].className = dots[i].className.replace(" active", "");
-  }
-  slides[slideIndex-1].style.display = "block";  
-  dots[slideIndex-1].className += " active";
-  setTimeout(showSlides, 6000); // Change image every 2 seconds
-}
+      // Style the previous button
+      prevButton.style.padding = '5px 10px';
+      prevButton.style.margin = '0 2px';
+      prevButton.style.backgroundColor = '#e0e0e0';
+      prevButton.style.color = '#000';
+      prevButton.style.borderRadius = '3px';
+
+      // Style the next button
+      nextButton.style.padding = '5px 10px';
+      nextButton.style.margin = '0 2px';
+      nextButton.style.backgroundColor = '#e0e0e0';
+      nextButton.style.color = '#000';
+      nextButton.style.borderRadius = '3px';
+    });
 </script>
-
 </html>
