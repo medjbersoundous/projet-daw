@@ -1,18 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Alkatra&family=Playfair+Display:ital@1&family=Poppins:wght@400;500;600&display=swap');
 *{
     font-family: 'Roboto', sans-serif;
     text-decoration: none;
     color: black;
+    padding: 0%;
+    margin: 0%;
 }
 section{
     display: flex;
     flex-direction: column;
     gap: 15px;
     align-items: center;
+    background-color: #09204E;
+    padding: 10px;
  
    
 }
 section >h4{
-    font-size: 20px;
+    font-size: 30px;
+    font-family: 'Playfair Display', serif;
+    color: white;
+    padding: 5px;
    
 }
 form{
@@ -22,7 +30,7 @@ form{
     width: 50%;
     border-radius: 20px;
     align-items: center;
-    background-color: #f1f1f1;
+    background-color: #E7EAED;
     padding: 30px;
    
 }
@@ -81,4 +89,10 @@ button{
     display: flex;
     align-items: center;
     justify-content: center;
+}
+.center input{
+    background-color:#09204E;
+    color: white;
+
+   
 }
