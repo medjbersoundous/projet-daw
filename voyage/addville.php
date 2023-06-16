@@ -82,7 +82,7 @@ if (isset($_POST['submit'])) {
         $nomsite = mysqli_real_escape_string($conn, $_POST['nomsite']);
         $cheminphoto = mysqli_real_escape_string($conn, $_POST['cheminphoto']);
 
-
+        //################################################################################ -->
         // Insertion dans la table "ville"
 
         $idpay = "SELECT idpays FROM pays where nompays ='$nompays';";
@@ -91,7 +91,7 @@ if (isset($_POST['submit'])) {
         $voyages = mysqli_fetch_all($result, MYSQLI_ASSOC);
         $a=$voyages[0]['idpays'];
 
-
+        //################################################################################ -->
         if (empty($a) ){
              // Insertion dans la table "pays"
         $sql2 = "INSERT INTO pays (nompays) VALUES ('$nompays')";
@@ -103,59 +103,61 @@ if (isset($_POST['submit'])) {
         
         $villeId =mysqli_insert_id($conn); 
 
-        //Insertion dans la table continents
-       // $sql3 = "INSERT INTO continent (nomcon) VALUES ('$nomcon')";
-         //mysqli_query($conn, $sql3);
-         //$continentId = mysqli_insert_id($conn); 
-        
+
+        //################################################################################
         // Insertion dans la table "necessaire"
-        $sql4 = "INSERT INTO necessaire (idville, typenec, nomnec) VALUES ( '$villeId','hotel', '$nomnech');";
-        $conn->query($sql4);
-        $sql5 = "INSERT INTO necessaire (idville, typenec, nomnec) VALUES ( '$villeId','aeroport', '$nomneca');";
-        $conn->query($sql5);
-        $sql6 = "INSERT INTO necessaire (idville, typenec, nomnec) VALUES ( '$villeId','gare', '$nomnecg');";
-        $conn->query($sql6);
-        $sql7 = "INSERT INTO necessaire (idville, typenec, nomnec) VALUES ( '$villeId','restaurant', '$nomnecr');";
-        $conn->query($sql7);
-        // Insertion dans la table "sites"
-       
 
-        if (isset($_FILES['Photos'])) {
-            $file = $_FILES['Photos'];
-        
-            // Informations sur le fichier
-            $fileName = $_POST['Site'];
-            $fileTmpPath = $file['tmp_name'];
-            $fileSize = $file['size'];
-            $fileType = $file['type'];
-        
-            // Chemin où enregistrer l'image sur le serveur
-            $targetDirectory = "uploads/";
-            $targetFilePath = $targetDirectory . $fileName;
-        
-            // Déplacer le fichier téléchargé vers le répertoire cible
-            if (move_uploaded_file($fileTmpPath, $targetFilePath)) {
-                // Insertion des données dans la base de données
-                $insertQuery = "INSERT INTO sites (idville, nomsite,cheminphoto) VALUES ('$villeID', '$nomsite','$targetFilePath')";
-                mysqli_query($conn, $insertQuery);
-                 
-            } 
-            if (mysqli_query($conn, $insertQuery)) {
-                echo "L'image a été téléchargée et enregistrée avec succès.";
-            } else {
-                echo "Erreur lors de l'enregistrement des données dans la base de données : " . mysqli_error($conn);
-            }
-        } else {
-            echo "Erreur lors du déplacement du fichier téléchargé.";
+
+        $sql4 = "SELECT nomnec FROM necessaire WHERE idvil ='$idvil';";
+        if (!empty($_POST["hotels"])) {
+            foreach ($_POST["hotels"] as $value) {
+                $value = ucwords($value);
+                
+      $sql4 = "INSERT INTO necessaire (idville, typenec, nomnec) VALUES ( '$villeId','hotel', '$value');";
+     
+      mysqli_query($conn, $sql4);
+      
+    
+      }
+      $sql5 = "SELECT nomnec FROM necessaire WHERE idvil ='$idvil';";
+    //   $conn->query($sql5);
+      if (!empty($_POST["restaurants"])) {
+          foreach ($_POST["restaurants"] as $value) {
+              $value = ucwords($value);
+              $sql5 = "INSERT INTO necessaire (idville, typenec, nomnec) VALUES ( '$villeId','restaurant', '$value');";
+            mysqli_query($conn, $sql5);
+          
         }
+      }
+      $sql6 = "SELECT nomnec FROM necessaire WHERE idvil ='$idvil';";
+    if (!empty($_POST["gares"])) {
+    foreach ($_POST["gares"] as $value) {
+      $value = ucwords($value);
+      $sql6 = "INSERT INTO necessaire (idville, typenec, nomnec) VALUES ( '$villeId','gare', '$value');";
+        mysqli_query($conn, $sql6);
     
-        
+    }
+  }
+  $sql7 = "SELECT nomnec FROM necessaire WHERE idvil ='$idvil';";
+  if (!empty($_POST["aeroports"])) {
+    foreach ($_POST["aeroports"] as $value) {
+      $value = ucwords($value);
+      $sql7 = "INSERT INTO necessaire (idville, typenec, nomnec) VALUES ( '$villeId','restaurant', '$value');";
+        mysqli_query($conn, $sql7);
+    
+    }
+  
+  }
 
-        // header('Location: indeex.php');
+}
+        $sql8= "INSERT INTO sites (idville, nomsite, cheminphoto) VALUES ('$villeId', '$value', '$cheminphoto')";
+        $conn->query($sql8);
+    
+        header('Location: indeex.php');
     }
+}
     
     
-    }
    
 
 
@@ -167,20 +169,20 @@ if (isset($_POST['submit'])) {
 <section >
     <h4 class="center">Ajouter une ville</h4>
     <form class="white" action="addville.php" method="post" enctype="multipart/form-data" >     <!-- pour permettre le téléchargement de fichiers. -->
-        <label>Nom de la ville :</label>
+       <!-- ################################################################################ -->
+    <label>Nom de la ville :</label>
         <input type="text" name="nomville" value="<?php echo htmlspecialchars($nomville) ?>">
         <div class="red-text"><?php echo $errors['nomville'] ?></div>
+         <!-- ################################################################################ -->
         <label>Description de la ville :</label>
-        <!-- <input type="text" name="descville" value="<?php echo htmlspecialchars($descville) ?>">  -->
+     
         <textarea name="descville" id="" cols="50" rows="5" value="<?php echo htmlspecialchars($descville)  ?>" ></textarea>
         <div class="red-text"><?php echo $errors['descville'] ?></div>
         <label>Pays :</label>
         <input type="text" name="nompays" value="<?php echo htmlspecialchars($nompays) ?>">
         <button type="button" > <a href="addpayscon.php">Ajouter</a> </button>
         <div class="red-text"><?php echo $errors['nompays'] ?></div>
-        <!-- <label>Continent :</label>
-        <input type="text" name="nomcon" value="<?php echo htmlspecialchars($nomcon) ?>">
-        <div class="red-text"><?php echo $errors['nomcon'] ?></div> -->
+        <!-- ################################################################################ -->
         <div>
             <label for="continent">Continent :</label>
              <select id="continent" name="nomcon" required>
@@ -197,78 +199,69 @@ if (isset($_POST['submit'])) {
                 <div class=""><?php echo $errors['nomcon'] ?></div>
         </div>
 
-
-
-        <label>hotel :</label>
-        <input type="text" name="nomnech" value="<?php echo htmlspecialchars($nomnech) ?>">
-        <div class="red-text"><?php echo $errors['nomnech'] ?></div>
-
-        <!-- <div>
-                    <label>Hôtels :</label>
-                    <input type="text" id="nomnech" name="nomnech" placeholder="Nom de l'hôtel"
-                        >
-                    <button type="button" onclick="ajouter('nomnech')">Ajouter</button>
-                    <br>
-                    <select id="nomnechs" multiple style="width:100px;" >
-                
-                </select>
-
-
-        </div> -->
-
-        <label>aeroport :</label>
-        <input type="text" name="nomneca" value="<?php echo htmlspecialchars($nomneca) ?>">
-        <div class="red-text"><?php echo $errors['nomneca'] ?></div>
-<!-- 
-        <div>
-                <label>Aeroport :</label>
-                <input type="text" id="nomneca" name="nomneca" placeholder="Nom de l'aeroport"
-                       >
-                <button type="button" onclick="ajouter('nomneca')">Ajouter</button>
-               <br>
-                <select id="nomnecas" multiple style="width:100px;">
-                    
-                </select>
-               
-
-        </div> -->
-        <label>gare :</label>
-        <input type="text" name="nomnecg" value="<?php echo htmlspecialchars($nomnecg) ?>">
-        <div class="red-text"><?php echo $errors['nomnecg'] ?></div>
-
-        <!-- <div>
-                <label>Gares :</label>
-                <input type="text" id="nomnecg" name="nomnecg" placeholder="Nom de la gare"
-                      >
-                <button type="button" onclick="ajouter('nomnecg')">Ajouter</button>
-               <br>
-                <select id="nomnecgs" multiple style="width:100px;">
-                    
-                </select>
-               
-
-        </div> -->
-        <label>restaurant :</label>
-        <input type="text" name="nomnecr" value="<?php echo htmlspecialchars($nomnecr) ?>">
-        <div class="red-text"><?php echo $errors['nomnecr'] ?></div>
-        <!-- <div>
-                <label>Restaurants :</label>
-                <input type="text" id="nomnecr" name="nomnecr" placeholder="Nom de la restaurant">
-                <button type="button" onclick="ajouter('nomnecr')">Ajouter</button>
-               <br>
-                <select id="nomnecrs" multiple style="width:100px;">
-                    
-                </select>
-               
-
-        </div> -->
-
+         <!-- ################################################################################ -->
+        <label for="hotel">Hotels:</label>
+      <input type="text" name="nomnech" id="hotel" placeholder="Hotels" />
+      <button onclick="ajouter(event,'hotel_list','hotel')">ajouterHotel</button>
+      <select id="hotel_list" name="hotels[]" multiple>
+        <?php
+        if (isset($_GET["nomvilmod"])) {
+          foreach ($updateHotels as $value) {
+            echo "<option>" . $value . "</option>";
+          }
+        }
+        ?>
+      </select>
+       <!-- ################################################################################ -->
+      <label for="restaurant">Restaurant:</label>
+      <input type="text" name="nomnecr" id="restaurant" placeholder="Restaurants" />
+      <button onclick="ajouter(event,'restaurants_list','restaurant')">ajouterRestaurant</button>
+      <select id="restaurants_list" name="restaurants[]" multiple>
+          <?php
+        if (isset($_GET["nomvilmod"])) {
+            foreach ($updateRestaurant as $value) {
+                echo "<option>" . $value . "</option>";
+            }
+        }
+        ?>
+      </select>
+      <br />
+      <!-- ################################################################################ -->
+      <label for="gare">Gares:</label>
+      <input type="text" name="nomnecg" id="gare" placeholder="Gares" />
+      <button onclick="ajouter(event,'gares_list','gare')">ajouterGare</button>
+      <select name="gares[]" id="gares_list" multiple>
+        <?php
+        if (isset($_GET["nomvilmod"])) {
+          foreach ($updateGares as $value) {
+            echo "<option>" . $value . "</option>";
+          }
+        }
+        ?>
+      </select>
+        <br>
+      <!-- ################################################################################ -->
+        <label for="aeroport">Aeroport:</label>
+      <input type="text" name="nomneca" id="aeroport" placeholder="Aeroport" />
+      <button onclick="ajouter(event,'aeroports_list','aeroport')">ajouterGare</button>
+      <select name="aeroports[]" id="aeroports_list" multiple>
+        <?php
+        if (isset($_GET["nomvilmod"])) {
+          foreach ($updateAeroports as $value) {
+            echo "<option>" . $value . "</option>";
+          }
+        }
+        ?>
+      </select>
+        <br>
+ <!-- ################################################################################ -->
+      <br>
         <label>nomsite :</label>
         <input type="text" name="nomsite" value="<?php echo htmlspecialchars($nomsite) ?>">
         <div class="red-text"><?php echo $errors['nomsite'] ?></div>
                
-        <label for="Photos">Choisissez une photo :</label>
-        <input type="file" id="Photos" name="Photos" multiple="multiple" placeholder="photo1.png" required>
+        <!-- <label for="cheminphoto">Choisissez une photo :</label>
+        <input type="file" id="cheminphoto" name="cheminphoto" multiple="multiple" placeholder="photo1.png" required> -->
       
        
         <div class="center">
@@ -290,5 +283,25 @@ if (isset($_POST['submit'])) {
    
   }
 }
+
+let i = 0;
+function ajouter(event, parent, child) {
+  event.preventDefault();
+
+  const list = document.getElementById(parent);
+  var input = document.getElementById(child);
+  var text = input.value;
+
+  var p = document.createElement("option");
+
+  p.textContent = text;
+  p.selected = true;
+  p.addEventListener("dblclick", function () {
+    list.removeChild(p);
+  });
+  list.appendChild(p);
+  //list.insertBefore(p,list.firstElementChild);
+}
+
 </script>
 </html>
