@@ -116,7 +116,7 @@ $sql .= " INNER JOIN sites ON ville.idville = sites.idville
 
 <div >
     <div class="text"> <h3 >IKTISHAF | اكتشاف</h3> </div>
-  <img src="travel2.avif" alt="hey" style="width:1300px; height:250px">
+  <img src="travel2.avif" alt="hey" style="width:1300px; height:200px">
 </div>
 
 </header>
@@ -156,7 +156,7 @@ $sql .= " INNER JOIN sites ON ville.idville = sites.idville
             <?php
           if ($villes) {
             foreach ($villes as $ville) {
-              echo '<li class="pagination-item">' . '<a href="ville.php?id=' . $ville['idville'] . '">' . $ville['nomville'] . '</a>' .
+              echo '<li class="pagination-item">' . '<a  href="ville.php?id=' . $ville['idville'] . '">' . $ville['nomville'] . '</a>' .
                 '<a href="modifier.php?id=' . $ville['idville'] . '"><i class="fa-solid fa-pen-to-square"></i></a>' .
                 '<span class="icon"><a href="indeex.php?delete=' . $ville['idville'] . '"><i class="fa-solid fa-trash"></i></a></span>' .
                 '</li>';
@@ -177,10 +177,11 @@ $sql .= " INNER JOIN sites ON ville.idville = sites.idville
     </section>
    </div>
   </div>
+  <!-- un script pour la pagination de resultat afficher -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.3/min/tiny-slider.js"></script>
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-      var slider = tns({
+ <script>
+       document.addEventListener('DOMContentLoaded', function () {
+       var slider = tns({
         container: '.liste-pagination',
         items: 4,
         slideBy: 'page',
@@ -189,22 +190,6 @@ $sql .= " INNER JOIN sites ON ville.idville = sites.idville
           nextButton: '.next',
         },
       });
-      var prevButton = document.querySelector('.prev');
-      var nextButton = document.querySelector('.next');
-
-      // Style the previous button
-      prevButton.style.padding = '5px 10px';
-      prevButton.style.margin = '0 2px';
-      prevButton.style.backgroundColor = '#e0e0e0';
-      prevButton.style.color = '#000';
-      prevButton.style.borderRadius = '3px';
-
-      // Style the next button
-      nextButton.style.padding = '5px 10px';
-      nextButton.style.margin = '0 2px';
-      nextButton.style.backgroundColor = '#e0e0e0';
-      nextButton.style.color = '#000';
-      nextButton.style.borderRadius = '3px';
     });
 </script>
 </html>

@@ -81,4 +81,18 @@ button{
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 30px;
+}
+input{
+    padding: 13px;
+    border: none;
+    border-radius: 20px;
+    width: 200px;
+}
+.con{
+    display: flex;
+    flex-direction: column;
+}
+optgroup{
+    width: 50px;
 }
