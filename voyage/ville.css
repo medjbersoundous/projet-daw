@@ -1,0 +1,133 @@
+
+
+  
+  
+ .ville{
+   
+    background-color: white;
+    width: 100%;
+    transition: 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+ 
+  
+
+ }
+
+ .ville h2{
+    font-family: 'Roboto', sans-serif;
+    color: #181e29;
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    font-size: xx-large;
+    font-weight: 200;
+   
+
+ }
+ .ville h2:hover{
+    color: grey;
+    transition: 0.3s;
+     }
+     .ville p{
+        font-family: 'Roboto', sans-serif;
+    color: #181e29;
+    text-align: center;
+    font-size: large;
+    font-weight: 200;
+    max-width: 50%;
+    margin: auto;
+   
+     }
+     .ville h3{
+        font-family: 'Roboto', sans-serif;
+        color: #181e29;
+        text-align: center;
+        margin-top: 50px;
+        margin-bottom: 10px;
+        font-size: x-large;
+        font-weight: 200;
+     
+      
+     }
+     .ville .bottom2{
+        border-bottom: solid 1px#181e29;
+       margin-bottom: 40px;
+       width: 100px;
+       margin: auto;
+       margin-bottom: 20px;
+     }
+     .grid{
+        display: grid;
+        grid-template-columns: 400px 400px 400px;
+      
+        gap: 20px;
+        margin-left: 110px;
+        
+     }
+     .sights{
+        background-color: #f1f1f1;
+        height: 450px;
+       width: 100%;
+       border-radius: 3% 3% 3% 3%;
+       border: 1px solid rgba(0,0,0,.03);
+       overflow: hidden;
+      
+
+     }
+     .sights2{
+        background-color: #f1f1f1;
+        height: 300px;
+       width: 200px;
+       border-radius: 3% 3% 3% 3%;
+       border: 1px solid rgba(0,0,0,.03);
+       overflow: hidden;
+      
+
+     }
+     .sights:hover{
+        opacity: 70%;
+     }
+     
+     .sights p{
+        font-family: 'Roboto', sans-serif;
+        color: #181e29;
+        text-align: center;
+        font-size: xx-large;
+        font-weight: 200;
+        max-width: 700px;
+        height: 80px;
+        margin-top: 40px;
+
+     }
+     .sights img{
+        height: 350px;
+        width: 100%;
+       
+     }
+     .flex{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+     }
+    .sights2 ul{
+       list-style: none;
+       font-family: 'Roboto', sans-serif;
+       font-size: 20px;
+       width: 100%;
+       padding: 5px;
+       display: flex;
+       flex-direction: column;
+       gap: 10px;
+       align-items: center;
+       text-align: center;
+       overflow: auto;
+     }
+    .sights2 ul li:hover{
+text-decoration: underline;
+     }
+   
+    
