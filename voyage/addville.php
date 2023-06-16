@@ -142,7 +142,7 @@ if (isset($_POST['submit'])) {
   if (!empty($_POST["aeroports"])) {
     foreach ($_POST["aeroports"] as $value) {
       $value = ucwords($value);
-      $sql7 = "INSERT INTO necessaire (idville, typenec, nomnec) VALUES ( '$villeId','aeroports', '$value');";
+      $sql7 = "INSERT INTO necessaire (idville, typenec, nomnec) VALUES ( '$villeId','restaurant', '$value');";
         mysqli_query($conn, $sql7);
     
     }
