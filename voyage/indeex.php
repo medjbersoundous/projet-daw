@@ -84,7 +84,7 @@ $sql .= " INNER JOIN sites ON ville.idville = sites.idville
 
 <div class="contente">
     <nav>
-        <h2>etudiant 1 </h2>
+        <h2>Étudiant 1: </h2>
         <ul>
           <li>Nom: Chouiref</li>
           <li>Prenom: Sidali</li>
@@ -94,7 +94,7 @@ $sql .= " INNER JOIN sites ON ville.idville = sites.idville
           <li>Mail: sidali20012017@outlook.com</li>
 
         </ul>
-        <h2>etudiant 2 </h2>
+        <h2>Étudiant 2: </h2>
         <ul>
           <li>Nom: Medjber</li>
           <li>Prenom: Soundous</li>
@@ -111,48 +111,20 @@ $sql .= " INNER JOIN sites ON ville.idville = sites.idville
     </nav>
    <div class="home">
     <header> 
-    <h1  >IKTISHAF | اكتشاف</h1>
-<!--     
+    
     <div class="slideshow-container">
 
-<div class="mySlides fade">
-  <img src="travel1.jpeg" style="width:1000px; height:200px">
-  <div class="text">IKTISHAF | اكتشاف</div>
-</div>
-
-<div class="mySlides fade">
-  <img src="travel2.jpeg" style="width:1000px; height:200px  ">
-  <div class="text">IKTISHAF | اكتشاف</div>
-</div>
-
-<div class="mySlides fade">
-  <img src="travel3.jpeg" style="width:1000px; height:200px">
-  <div class="text">IKTISHAF | اكتشاف</div>
-</div>
-
-
-</div>
 <div >
-    <span class="dot"></span> 
-    <span class="dot"></span> 
-    <span class="dot"></span> 
+    <div class="text"> <h3 >IKTISHAF | اكتشاف</h3> </div>
+  <img src="travel2.avif" alt="hey" style="width:1300px; height:250px">
 </div>
--->
+
 </header>
 
    
-    <section>
-       <div class="airplan" >
-
-           <img src="airplane.png" alt="" >
-           <h2  class="titre-recherche">Discover your favourite place with iktishaf</h2>
-        </div>
-       
-        <!-- <h3>all what you need to know about your destination
-            discover your favourite place with us 
-        </h3> -->
+    <section class="pre">
         
-<form action="indeex.php" method="POST">
+     <form action="indeex.php" method="POST">
     <div class="input">
         <span>Continent:</span>
         <input type="text" name="continent">
@@ -178,7 +150,7 @@ $sql .= " INNER JOIN sites ON ville.idville = sites.idville
 
        
         <hr>
-        <h2 class="titre-recherche">All what you need to know about your destination :</h2>
+        <h2 class="titre-recherche">Tout ce que vous devez savoir sur votre destination :</h2>
         <div class="resultat">
             <ul class="liste-pagination">
             <?php
