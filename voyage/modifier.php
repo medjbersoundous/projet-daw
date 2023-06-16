@@ -9,10 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $descVille = $_POST["descVille"];
     $pays = $_POST["pays"];
     $sites = $_POST["sites"];
-    $resto = $_POST["resto"];
-    $gare = $_POST["gare"];
-    $hotel = $_POST["hotel"];
-    $aeroport = $_POST["aeroport"];
+    
     
     // Vérifier si une image a été téléchargée
     // ...
@@ -30,16 +27,44 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (mysqli_query($conn, $sqlUpdate)) {
             // Supprimer les anciens enregistrements de sites pour cette ville
             mysqli_query($conn, "DELETE FROM sites WHERE idville = $idVille");
-            mysqli_query( $conn,"DELETE FROM necessaire WHERE idville = $idVille" );
-          
-       
+            mysqli_query($conn, "DELETE FROM necessaire WHERE idville = $idVille");
 
-            // Insérer le nouveau sites avec l'image
-            mysqli_query($conn, "INSERT INTO sites (idville, nomsites, cheminphoto) VALUES ($idVille, '$sites', '')");
-            mysqli_query($conn, "INSERT INTO necessaire (idville,nomnec , typenec) VALUES ($idVille, '$resto', 'restaurant')");
-            mysqli_query($conn, "INSERT INTO necessaire (idville,nomnec , typenec) VALUES ($idVille, '$gare', 'gare')");
-            mysqli_query($conn, "INSERT INTO necessaire (idville,nomnec , typenec) VALUES ($idVille, '$hotel', 'hotel')");
-            mysqli_query($conn, "INSERT INTO necessaire (idville,nomnec , typenec) VALUES ($idVille, '$aeroport', 'aeroport')");
+            // Insérer le nouveau site avec l'image
+            mysqli_query($conn, "INSERT INTO sites (idville, nomsite, cheminphoto) VALUES ($idVille, '$sites', '')");
+            
+            $villeId = $idVille;
+
+            if (!empty($_POST["restaurants"])) {
+                foreach ($_POST["restaurants"] as $value) {
+                    $value = ucwords($value);
+                    $sql5 = "INSERT INTO necessaire (idville, typenec, nomnec) VALUES ('$villeId','restaurant', '$value');";
+                    mysqli_query($conn, $sql5);
+                }
+            }
+
+            if (!empty($_POST["gares"])) {
+                foreach ($_POST["gares"] as $value) {
+                    $value = ucwords($value);
+                    $sql6 = "INSERT INTO necessaire (idville, typenec, nomnec) VALUES ('$villeId','gare', '$value');";
+                    mysqli_query($conn, $sql6);
+                }
+            }
+
+            if (!empty($_POST["hotels"])) {
+                foreach ($_POST["hotels"] as $value) {
+                    $value = ucwords($value);
+                    $sql4 = "INSERT INTO necessaire (idville, typenec, nomnec) VALUES ('$villeId','hotel', '$value');";
+                    mysqli_query($conn, $sql4);
+                }
+            }
+print_r($_POST["aeroports"]);
+            if (!empty($_POST["aeroports"])) {
+                foreach ($_POST["aeroports"] as $value) {
+                    $value = ucwords($value);
+                    $sql7 = "INSERT INTO necessaire (idville, typenec, nomnec) VALUES ('$villeId','aeroports', '$value');";
+                    mysqli_query($conn, $sql7);
+                }
+            }
 
             echo "Mise à jour effectuée avec succès.";
         } else {
@@ -57,7 +82,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 // Affichage du formulaire de modification
 $idVille = isset($_GET['id']) ? $_GET['id'] : null;
 
-if ($idVille) {
+if ($idVille): 
     $sql = "SELECT ville.*, pays.nompays AS nom_pays, sites.*
     FROM ville
     JOIN pays ON ville.idpays = pays.idpays
@@ -67,27 +92,111 @@ if ($idVille) {
     $ville = mysqli_fetch_assoc($rslt);
     mysqli_free_result($rslt);
     mysqli_close($conn);
-   
+    ?>
 
-    if ($ville) {
-        echo '<form method="POST" action="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '" enctype="multipart/form-data">';
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Détails de la ville</title>
+    </head>
+    <body>
+        <h1>Détails de la ville</h1>
 
-        echo '<input type="hidden" name="idVille" value="' . $ville['idville'] . '">';
-        echo 'Nom : <input type="text" name="nomVille" value="' . $ville['nomville'] . '"><br>';
-        echo 'pays : <input type="text" name="pays" value="' . $ville['nom_pays'] . '"><br>';
-        echo 'sites : <input type="text" name="sites" value="' . $ville['nomsite'] . '"><br>';
-        echo 'image : <input type="file" name="image"><br>';
-        echo 'resto : <input type="text" name="resto" value=""> <br>';
-        echo 'gare : <input type="text" name="gare" value=""> <br>';
-        echo 'hotel : <input type="text" name="hotel" value=""> <br>';
-        echo 'aeroport : <input type="text" name="aeroport" value=""> <br>';
-        echo 'Description : <textarea name="descVille">' . $ville['descville'] . '</textarea><br>';
-        echo '<input type="submit" value="Modifier">';
-        echo '</form>';
-    } else {
-        echo 'Ville non trouvée.';
-    }
-} else {
-    echo 'Identifiant de ville non spécifié.';
-}
-?>
+        <?php if ($ville): ?>
+            <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" enctype="multipart/form-data">
+                <input type="hidden" name="idVille" value="<?php echo $ville['idville']; ?>">
+                <label for="nomVille">Nom :</label>
+                <input type="text" name="nomVille" value="<?php echo $ville['nomville']; ?>"><br>
+                <label for="descVille">descVille :</label>
+                 <textarea name="descVille"><?php echo $ville['descville']; ?></textarea><br>
+                <label for="pays">Pays :</label>
+                <input type="text" name="pays" value="<?php echo $ville['nom_pays']; ?>"><br>
+                <label for="sites">Sites :</label>
+                <input type="text" name="sites" value="<?php echo $ville['nomsite']; ?>"><br>
+                
+                <!-- Liste des hôtels -->
+                <label for="hotel">Hotels:</label>
+                <input type="text" name="hotel" id="hotel" placeholder="Hotels" />
+                <button onclick="ajouter(event,'hotel_list','hotel')">ajouterHotel</button>
+                <select id="hotel_list" name="hotels[]" multiple>
+                    <?php
+                    if (isset($_GET["nomvilmod"])) {
+                        foreach ($updateHotels as $value) {
+                            echo "<option>" . $value . "</option>";
+                        }
+                    }
+                    ?>
+                </select>
+                <br />
+                
+                <!-- Liste des restaurants -->
+                <label for="resto">Restaurant:</label>
+                <input type="text" name="resto" id="restaurant" placeholder="Restaurants" />
+                <button onclick="ajouter(event,'restaurants_list','restaurant')">ajouterRestaurant</button>
+                <select id="restaurants_list" name="restaurants[]" multiple>
+                    <?php
+                    if (isset($_GET["nomvilmod"])) {
+                        foreach ($updateRestaurant as $value) {
+                            echo "<option>" . $value . "</option>";
+                        }
+                    }
+                    ?>
+                </select>
+                <br />
+                
+                <!-- Liste des gares -->
+                <label for="gare">Gares:</label>
+                <input type="text" name="gare" id="gare" placeholder="Gares" />
+                <button onclick="ajouter(event,'gares_list','gare')">ajouterGare</button>
+                <select name="gares[]" id="gares_list" multiple>
+                    <?php
+                    if (isset($_GET["nomvilmod"])) {
+                        foreach ($updateGares as $value) {
+                            echo "<option>" . $value . "</option>";
+                        }
+                    }
+                    ?>
+                </select>
+                <br />
+                
+                <!-- Liste des aéroports -->
+                <label for="aeroport">Aeroport:</label>
+                <input type="text" name="aeroport" id="aeroport" placeholder="Aeroport" />
+                <button onclick="ajouter(event,'aeroports_list','aeroport')">ajouterAeroport</button>
+                <select name="aeroports[]" id="aeroports_list" multiple>
+                    <?php
+                    if (isset($_GET["nomvilmod"])) {
+                        foreach ($updateAeroports as $value) {
+                            echo "<option>" . $value . "</option>";
+                        }
+                    }
+                    ?>
+                </select>
+                <br />
+                
+                <input type="submit" value="Enregistrer" name="submit">
+            </form>
+        <?php else: ?>
+            <p>Ville non trouvée.</p>
+        <?php endif; ?>
+        <script>
+        function ajouter(event, parent, child) {
+            event.preventDefault();
+
+            const list = document.getElementById(parent);
+            var input = document.getElementById(child);
+            var text = input.value;
+
+            if (text !== "") {
+                var option = document.createElement("option");
+                option.text = text;
+                list.add(option);
+                input.value = "";
+            }
+        }
+        </script>
+    </body>
+    </html>
+<?php else: ?>
+    <p>Identifiant de ville non spécifié.</p>
+<?php endif; ?>

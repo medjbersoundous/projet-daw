@@ -142,7 +142,7 @@ if (isset($_POST['submit'])) {
   if (!empty($_POST["aeroports"])) {
     foreach ($_POST["aeroports"] as $value) {
       $value = ucwords($value);
-      $sql7 = "INSERT INTO necessaire (idville, typenec, nomnec) VALUES ( '$villeId','restaurant', '$value');";
+      $sql7 = "INSERT INTO necessaire (idville, typenec, nomnec) VALUES ( '$villeId','aeroports', '$value');";
         mysqli_query($conn, $sql7);
     
     }
@@ -168,7 +168,7 @@ if (isset($_POST['submit'])) {
 
 <section >
     <h4 class="center">Ajouter une ville</h4>
-    <form class="white" action="addville.php" method="post" enctype="multipart/form-data" >     <!-- pour permettre le téléchargement de fichiers. -->
+    <form class="white" action="addville.php" method="POST" enctype="multipart/form-data" >     <!-- pour permettre le téléchargement de fichiers. -->
        <!-- ################################################################################ -->
     <label>Nom de la ville :</label>
         <input type="text" name="nomville" value="<?php echo htmlspecialchars($nomville) ?>">
