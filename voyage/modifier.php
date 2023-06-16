@@ -98,87 +98,108 @@ if ($idVille):
     <html>
     <head>
         <title>Détails de la ville</title>
+        <link rel="stylesheet" href="modifier.css">
     </head>
     <body>
-        <h1>Détails de la ville</h1>
+     <section>
+     <h1>Modifier</h1>
 
-        <?php if ($ville): ?>
-            <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" enctype="multipart/form-data">
-                <input type="hidden" name="idVille" value="<?php echo $ville['idville']; ?>">
-                <label for="nomVille">Nom :</label>
-                <input type="text" name="nomVille" value="<?php echo $ville['nomville']; ?>"><br>
-                <label for="descVille">descVille :</label>
-                 <textarea name="descVille"><?php echo $ville['descville']; ?></textarea><br>
-                <label for="pays">Pays :</label>
-                <input type="text" name="pays" value="<?php echo $ville['nom_pays']; ?>"><br>
-                <label for="sites">Sites :</label>
-                <input type="text" name="sites" value="<?php echo $ville['nomsite']; ?>"><br>
-                
-                <!-- Liste des hôtels -->
-                <label for="hotel">Hotels:</label>
-                <input type="text" name="hotel" id="hotel" placeholder="Hotels" />
-                <button onclick="ajouter(event,'hotel_list','hotel')">ajouterHotel</button>
-                <select id="hotel_list" name="hotels[]" multiple>
-                    <?php
-                    if (isset($_GET["nomvilmod"])) {
-                        foreach ($updateHotels as $value) {
-                            echo "<option>" . $value . "</option>";
-                        }
-                    }
-                    ?>
-                </select>
-                <br />
-                
-                <!-- Liste des restaurants -->
-                <label for="resto">Restaurant:</label>
-                <input type="text" name="resto" id="restaurant" placeholder="Restaurants" />
-                <button onclick="ajouter(event,'restaurants_list','restaurant')">ajouterRestaurant</button>
-                <select id="restaurants_list" name="restaurants[]" multiple>
-                    <?php
-                    if (isset($_GET["nomvilmod"])) {
-                        foreach ($updateRestaurant as $value) {
-                            echo "<option>" . $value . "</option>";
-                        }
-                    }
-                    ?>
-                </select>
-                <br />
-                
-                <!-- Liste des gares -->
-                <label for="gare">Gares:</label>
-                <input type="text" name="gare" id="gare" placeholder="Gares" />
-                <button onclick="ajouter(event,'gares_list','gare')">ajouterGare</button>
-                <select name="gares[]" id="gares_list" multiple>
-                    <?php
-                    if (isset($_GET["nomvilmod"])) {
-                        foreach ($updateGares as $value) {
-                            echo "<option>" . $value . "</option>";
-                        }
-                    }
-                    ?>
-                </select>
-                <br />
-                
-                <!-- Liste des aéroports -->
-                <label for="aeroport">Aeroport:</label>
-                <input type="text" name="aeroport" id="aeroport" placeholder="Aeroport" />
-                <button onclick="ajouter(event,'aeroports_list','aeroport')">ajouterAeroport</button>
-                <select name="aeroports[]" id="aeroports_list" multiple>
-                    <?php
-                    if (isset($_GET["nomvilmod"])) {
-                        foreach ($updateAeroports as $value) {
-                            echo "<option>" . $value . "</option>";
-                        }
-                    }
-                    ?>
-                </select>
-                <br />
-                
-                <input type="submit" value="Enregistrer" name="submit">
-            </form>
-        <?php else: ?>
-            <p>Ville non trouvée.</p>
-        <?php endif; ?>
+<?php if ($ville): ?>
+    <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" enctype="multipart/form-data">
+        <input type="hidden" name="idVille" value="<?php echo $ville['idville']; ?>">
+        <div><label for="nomVille">Nom :</label>
+        <input type="text" name="nomVille" value="<?php echo $ville['nomville']; ?>">
+    <div class="btn"></div>
+    <div class="list"></div>
+    </div>
+       <div> <label for="descVille">descVille :</label>
+         <textarea name="descVille"><?php echo $ville['descville']; ?></textarea>
+         <div class="btn"></div>
+    <div class="list"></div></div>
+     <div>   <label for="pays">Pays :</label>
+        <input type="text" name="pays" value="<?php echo $ville['nom_pays']; ?>">
+        <div class="btn"></div>
+    <div class="list"></div></div>
+    <div>    <label for="sites">Sites :</label>
+        <input type="text" name="sites" value="<?php echo $ville['nomsite']; ?>">
+        <div class="btn"></div>
+    <div class="list"></div></div>
+        
+        <!-- Liste des hôtels -->
+       <div>
+       <label for="hotel">Hotels:</label>
+        <input type="text" name="hotel" id="hotel" placeholder="Hotels" />
+        <button onclick="ajouter(event,'hotel_list','hotel')">ajouter</button>
+        <select class="list" id="hotel_list" name="hotels[]" multiple>
+            <?php
+            if (isset($_GET["nomvilmod"])) {
+                foreach ($updateHotels as $value) {
+                    echo "<option>" . $value . "</option>";
+                }
+            }
+            ?>
+        </select>
+     
+       </div>
+        
+        <!-- Liste des restaurants -->
+       <div> <label for="resto">Restaurant:</label>
+        <input type="text" name="resto" id="restaurant" placeholder="Restaurants" />
+        <button onclick="ajouter(event,'restaurants_list','restaurant')">ajouter</button>
+        <select class="list" id="restaurants_list" name="restaurants[]" multiple>
+            <?php
+            if (isset($_GET["nomvilmod"])) {
+                foreach ($updateRestaurant as $value) {
+                    echo "<option>" . $value . "</option>";
+                }
+            }
+            ?>
+        </select>
+     </div>
+        
+        <!-- Liste des gares -->
+        <div>
+        <label for="gare">Gares:</label>
+        <input type="text" name="gare" id="gare" placeholder="Gares" />
+        <button onclick="ajouter(event,'gares_list','gare')">ajouter</button>
+        <select class="list" name="gares[]" id="gares_list" multiple>
+            <?php
+            if (isset($_GET["nomvilmod"])) {
+                foreach ($updateGares as $value) {
+                    echo "<option>" . $value . "</option>";
+                }
+            }
+            ?>
+        </select>
+     
+        </div>
+        
+        <!-- Liste des aéroports -->
+       <div>
+       <label for="aeroport">Aeroport:</label>
+        <input type="text" name="aeroport" id="aeroport" placeholder="Aeroport" />
+        <button onclick="ajouter(event,'aeroports_list','aeroport')">ajouter</button>
+        <select class="list" name="aeroports[]" id="aeroports_list" multiple>
+            <?php
+            if (isset($_GET["nomvilmod"])) {
+                foreach ($updateAeroports as $value) {
+                    echo "<option>" . $value . "</option>";
+                }
+            }
+            ?>
+        </select>
+     
+       </div>
+        
+      
+       <div class="center">
+       <input type="submit" value="Enregistrer" name="submit">
+       </div>
+    </form>
+<?php else: ?>
+    <p>Ville non trouvée.</p>
+<?php endif; ?>
+     </section>
         <script>
         function ajouter(event, parent, child) {
             event.preventDefault();

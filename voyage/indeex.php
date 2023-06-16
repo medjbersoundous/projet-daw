@@ -106,7 +106,7 @@ $sql .= " INNER JOIN sites ON ville.idville = sites.idville
         </ul>
         <hr>
         <ul>
-            <li><a href="add.php">Ajouter Ville</a></li>
+            <li><a href="addville.php">Ajouter Ville</a></li>
         </ul>
     </nav>
    <div class="home">
