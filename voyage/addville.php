@@ -150,8 +150,32 @@ if (isset($_POST['submit'])) {
   }
 
 }
-        $sql8= "INSERT INTO sites (idville, nomsite, cheminphoto) VALUES ('$villeId', '$value', '$cheminphoto')";
-        $conn->query($sql8);
+if (isset($_FILES['cheminphoto'])) {
+    $file = $_FILES['cheminphoto'];
+
+    // Vérifier s'il y a une erreur lors du téléchargement
+    if ($file['error'] === UPLOAD_ERR_OK) {
+        // Obtenir le nom et l'emplacement temporaire du fichier
+        $file_name = $file['name'];
+        $file_tmp = $file['tmp_name'];
+
+        // Déplacer le fichier téléchargé vers un emplacement permanent
+        $file_destination = 'uploads/' . $file_name;
+        move_uploaded_file($file_tmp, $file_destination);
+
+        // Stocker le chemin de la photo dans la base de données
+        $cheminphoto = $file_destination;
+    } else {
+        // Gérer l'erreur de téléchargement
+        $errors['cheminphoto'] = "Erreur lors du téléchargement de la photo";
+    }
+}
+
+$sql8="INSERT INTO sites (idville, nomsite, cheminphoto) VALUES ('$villeId', '$nomsite', '$cheminphoto')";
+$conn->query($sql8);
+
+
+    
     
         header('Location: indeex.php');
     }
@@ -279,7 +303,7 @@ if (isset($_POST['submit'])) {
       </select>
        
       </div>
- <!-- ################################################################################ -->
+ <!-- #################################### PARTIE SITE ############################################ -->
      <div>
 
         <label>nomsite :</label>
@@ -288,7 +312,13 @@ if (isset($_POST['submit'])) {
         <div class="btn"></div>
         <div class="list"></div>
      </div>
-               
+               <!-- ######################################## PARTIE IMAGE ######################################## -->    
+      <div>
+
+        <label for="cheminphoto">Choisissez une photo :</label>
+           <input type="file" name="cheminphoto" >
+           <div class="red-text"><?php echo $errors['cheminphoto'] ?></div>
+      </div>
         <!-- <label for="cheminphoto">Choisissez une photo :</label>
         <input type="file" id="cheminphoto" name="cheminphoto" multiple="multiple" placeholder="photo1.png" required> -->
       
@@ -298,39 +328,5 @@ if (isset($_POST['submit'])) {
         </div>
     </form>
 </section>
-<script>
-    function ajouter(element) {
-  var input = document.getElementById(element);
-  var liste = document.getElementById( element + "s");
-
-  if (input.value !== "") {
-    var option = document.createElement("option");
-    option.text = input.value;
-    liste.add(option);
-    input.value = "";
-    
-   
-  }
-}
-
-let i = 0;
-function ajouter(event, parent, child) {
-  event.preventDefault();
-
-  const list = document.getElementById(parent);
-  var input = document.getElementById(child);
-  var text = input.value;
-
-  var p = document.createElement("option");
-
-  p.textContent = text;
-  p.selected = true;
-  p.addEventListener("dblclick", function () {
-    list.removeChild(p);
-  });
-  list.appendChild(p);
-  //list.insertBefore(p,list.firstElementChild);
-}
-
-</script>
+<script src="./js/script.js"></script>
 </html>

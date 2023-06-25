@@ -180,17 +180,6 @@ $sql .= " INNER JOIN sites ON ville.idville = sites.idville
   </div>
   <!-- un script pour la pagination de resultat afficher -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.3/min/tiny-slider.js"></script>
- <script>
-       document.addEventListener('DOMContentLoaded', function () {
-       var slider = tns({
-        container: '.liste-pagination',
-        items: 3,
-        slideBy: 'page',
-        controls: {
-          prevButton: '.prev',
-          nextButton: '.next',
-        },
-      });
-    });
+ <script src="script.js">
 </script>
 </html>

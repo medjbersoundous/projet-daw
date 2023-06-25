@@ -149,21 +149,7 @@ if ($idVille):
     <p>Ville non trouvée.</p>
 <?php endif; ?>
      </section>
-        <script>
-        function ajouter(event, parent, child) {
-            event.preventDefault();
-
-            const list = document.getElementById(parent);
-            var input = document.getElementById(child);
-            var text = input.value;
-
-            if (text !== "") {
-                var option = document.createElement("option");
-                option.text = text;
-                list.add(option);
-                input.value = "";
-            }
-        }
+        <script src="script.js">
         </script>
     </body>
     </html>
