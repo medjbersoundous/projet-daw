@@ -9,10 +9,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $descVille = $_POST["descVille"];
     $pays = $_POST["pays"];
     $sites = $_POST["sites"];
+    $hotel = $_POST["hotel"];
+    $resto = $_POST["resto"];
+    $gare = $_POST["gare"];
+    $aeroport = $_POST["aeroport"];
+    $image=$_POST["image"];
     
     
     // Vérifier si une image a été téléchargée
-    // ...
+   
 
     // Insérer les données dans la base de données
     $sql2 = "SELECT idpays FROM pays WHERE nompays='$pays'";
@@ -30,41 +35,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             mysqli_query($conn, "DELETE FROM necessaire WHERE idville = $idVille");
 
             // Insérer le nouveau site avec l'image
-            mysqli_query($conn, "INSERT INTO sites (idville, nomsite, cheminphoto) VALUES ($idVille, '$sites', '')");
+            mysqli_query($conn, "INSERT INTO sites (idville, nomsite, cheminphoto) VALUES ($idVille, '$sites', '$image')");
+            mysqli_query($conn, "INSERT INTO necessaire (idville, typenec, nomnec) VALUES ($idVille, 'restaurant', '$resto')");
+            mysqli_query($conn, "INSERT INTO necessaire (idville, typenec, nomnec) VALUES ($idVille, 'hotel', '$hotel')");
+            mysqli_query($conn, "INSERT INTO necessaire (idville, typenec, nomnec) VALUES ($idVille, 'gare', '$gare')");
+            mysqli_query($conn, "INSERT INTO necessaire (idville, typenec, nomnec) VALUES ($idVille, 'aeroport', '$aeroport')");
             
-            $villeId = $idVille;
+          
 
-            if (!empty($_POST["restaurants"])) {
-                foreach ($_POST["restaurants"] as $value) {
-                    $value = ucwords($value);
-                    $sql5 = "INSERT INTO necessaire (idville, typenec, nomnec) VALUES ('$villeId','restaurant', '$value');";
-                    mysqli_query($conn, $sql5);
-                }
-            }
+      
 
-            if (!empty($_POST["gares"])) {
-                foreach ($_POST["gares"] as $value) {
-                    $value = ucwords($value);
-                    $sql6 = "INSERT INTO necessaire (idville, typenec, nomnec) VALUES ('$villeId','gare', '$value');";
-                    mysqli_query($conn, $sql6);
-                }
-            }
-
-            if (!empty($_POST["hotels"])) {
-                foreach ($_POST["hotels"] as $value) {
-                    $value = ucwords($value);
-                    $sql4 = "INSERT INTO necessaire (idville, typenec, nomnec) VALUES ('$villeId','hotel', '$value');";
-                    mysqli_query($conn, $sql4);
-                }
-            }
-print_r($_POST["aeroports"]);
-            if (!empty($_POST["aeroports"])) {
-                foreach ($_POST["aeroports"] as $value) {
-                    $value = ucwords($value);
-                    $sql7 = "INSERT INTO necessaire (idville, typenec, nomnec) VALUES ('$villeId','aeroports', '$value');";
-                    mysqli_query($conn, $sql7);
-                }
-            }
 
             echo "Mise à jour effectuée avec succès.";
         } else {
@@ -107,70 +87,48 @@ if ($idVille):
 <?php if ($ville): ?>
     <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" enctype="multipart/form-data">
         <input type="hidden" name="idVille" value="<?php echo $ville['idville']; ?>">
+          <!-- nom ville -->
+         
         <div><label for="nomVille">Nom :</label>
         <input type="text" name="nomVille" value="<?php echo $ville['nomville']; ?>">
-    <div class="btn"></div>
-    <div class="list"></div>
+ </div>
     </div>
+      <!-- descville -->
        <div> <label for="descVille">descVille :</label>
          <textarea name="descVille"><?php echo $ville['descville']; ?></textarea>
-         <div class="btn"></div>
-    <div class="list"></div></div>
+  </div>
+      <!-- pays -->
      <div>   <label for="pays">Pays :</label>
         <input type="text" name="pays" value="<?php echo $ville['nom_pays']; ?>">
-        <div class="btn"></div>
-    <div class="list"></div></div>
+   </div>
+      <!-- site -->
     <div>    <label for="sites">Sites :</label>
         <input type="text" name="sites" value="<?php echo $ville['nomsite']; ?>">
-        <div class="btn"></div>
-    <div class="list"></div></div>
+    </div>
+      <!--image site -->
+    <div>    <label for="sites">image site :</label>
+    <input type="text" name="image" id="image">
+    </div>
         
         <!-- Liste des hôtels -->
        <div>
        <label for="hotel">Hotels:</label>
         <input type="text" name="hotel" id="hotel" placeholder="Hotels" />
-        <button onclick="ajouter(event,'hotel_list','hotel')">ajouter</button>
-        <select class="list" id="hotel_list" name="hotels[]" multiple>
-            <?php
-            if (isset($_GET["nomvilmod"])) {
-                foreach ($updateHotels as $value) {
-                    echo "<option>" . $value . "</option>";
-                }
-            }
-            ?>
-        </select>
+      </div>
      
        </div>
         
         <!-- Liste des restaurants -->
        <div> <label for="resto">Restaurant:</label>
         <input type="text" name="resto" id="restaurant" placeholder="Restaurants" />
-        <button onclick="ajouter(event,'restaurants_list','restaurant')">ajouter</button>
-        <select class="list" id="restaurants_list" name="restaurants[]" multiple>
-            <?php
-            if (isset($_GET["nomvilmod"])) {
-                foreach ($updateRestaurant as $value) {
-                    echo "<option>" . $value . "</option>";
-                }
-            }
-            ?>
-        </select>
+       
      </div>
         
         <!-- Liste des gares -->
         <div>
         <label for="gare">Gares:</label>
         <input type="text" name="gare" id="gare" placeholder="Gares" />
-        <button onclick="ajouter(event,'gares_list','gare')">ajouter</button>
-        <select class="list" name="gares[]" id="gares_list" multiple>
-            <?php
-            if (isset($_GET["nomvilmod"])) {
-                foreach ($updateGares as $value) {
-                    echo "<option>" . $value . "</option>";
-                }
-            }
-            ?>
-        </select>
+       
      
         </div>
         
@@ -178,16 +136,7 @@ if ($idVille):
        <div>
        <label for="aeroport">Aeroport:</label>
         <input type="text" name="aeroport" id="aeroport" placeholder="Aeroport" />
-        <button onclick="ajouter(event,'aeroports_list','aeroport')">ajouter</button>
-        <select class="list" name="aeroports[]" id="aeroports_list" multiple>
-            <?php
-            if (isset($_GET["nomvilmod"])) {
-                foreach ($updateAeroports as $value) {
-                    echo "<option>" . $value . "</option>";
-                }
-            }
-            ?>
-        </select>
+       
      
        </div>
         

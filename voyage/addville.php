@@ -236,7 +236,7 @@ if (isset($_POST['submit'])) {
      <label for="restaurant">Restaurant:</label>
       <input type="text" name="nomnecr" id="restaurant" placeholder="Restaurants" />
       <button onclick="ajouter(event,'restaurants_list','restaurant')">Ajouter</button>
-      <select id="restaurants _list" class="list" name="restaurants[]" multiple>
+      <select id="restaurants_list" class="list" name="restaurants[]" multiple>
           <?php
         if (isset($_GET["nomvilmod"])) {
             foreach ($updateRestaurant as $value) {

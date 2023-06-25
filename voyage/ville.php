@@ -4,10 +4,9 @@ include("config/connect.php");
 if (isset($_GET['id'])) {
     $id = mysqli_real_escape_string($conn, $_GET['id']);
 }
-$sql = "SELECT ville.*, pays.nompays AS nom_pays,  necessaire.typenec, necessaire.nomnec
+$sql = "SELECT ville.*
         FROM ville
-        JOIN pays ON ville.idpays = pays.idpays
-        JOIN necessaire ON ville.idville = necessaire.idville
+       
         WHERE ville.idville = $id";
 $sql2 = "SELECT necessaire.typenec, necessaire.nomnec
 FROM necessaire

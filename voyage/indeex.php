@@ -20,6 +20,7 @@ if (isset($_GET['delete'])) {
     header("Location: indeex.php");
     exit();
 }
+//recherche 
 if (isset($_POST['submit'])) {
 
     $continent = $_POST['continent'];
@@ -183,7 +184,7 @@ $sql .= " INNER JOIN sites ON ville.idville = sites.idville
        document.addEventListener('DOMContentLoaded', function () {
        var slider = tns({
         container: '.liste-pagination',
-        items: 4,
+        items: 3,
         slideBy: 'page',
         controls: {
           prevButton: '.prev',
